@@ -51,10 +51,10 @@ public class Parser {
         }
     }
 
-    public static void outputJSON(Storage storage){
-        Gson gson = new Gson();
-        String str = gson.toJson(storage);
-        Storage newStorage = gson.fromJson(str, Storage.class);
-        System.out.println(str);
-    }
+//    public static void outputJSON(Storage storage){
+//        Gson gson = new Gson();
+//        String str = gson.toJson(storage);
+//        Storage newStorage = gson.fromJson(str, Storage.class);
+//        System.out.println(str);
+//    }
 }
