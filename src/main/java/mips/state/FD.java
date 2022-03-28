@@ -1,15 +1,16 @@
 package mips.state;
 
-import mips.Storage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Logger;
+import mips.Storage;
 
 /**
  * 1. Fetch & Decode stage
  */
 public class FD {
 
-    static Logger logger =  java.util.logging.Logger.getLogger("logger");
+    private static Logger logger = LoggerFactory.getLogger(FD.class);
 
     /**
      * fetch instructions and update PC

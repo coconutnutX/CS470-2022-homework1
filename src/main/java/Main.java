@@ -3,7 +3,6 @@ import java.util.List;
 
 import mips.Control;
 import mips.Instruction;
-import mips.Storage;
 import util.Parser;
 
 public class Main {

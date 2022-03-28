@@ -2,7 +2,8 @@ package util;
 
 import com.google.gson.Gson;
 import mips.Instruction;
-import mips.Storage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Reader;
 import java.nio.file.Files;
@@ -11,18 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
+
+    private static Logger logger = LoggerFactory.getLogger(Parser.class);
+
     public static List<Instruction> readInstruction(String fileName){
         // read JSON file
         List<String> strList = readJSON(fileName);
 
         // parse instructions
         List<Instruction> insList = new ArrayList<>();
-        System.out.println("Parsing instruction:");
+        logger.info("Parsing instruction:");
         for(String str: strList){
             Instruction instruction = new Instruction(str);
             insList.add(instruction);
 
-            System.out.println(instruction.toString());
+            logger.info(instruction.toString());
         }
         return insList;
     }
@@ -36,9 +40,9 @@ public class Parser {
             // convert JSON file to list
             List<String> list = gson.fromJson(reader, List.class);
 
-            System.out.println("Parsing JSON:");
+            logger.info("Parsing JSON:");
             for (String str: list) {
-                System.out.println(str);
+                logger.info(str);
             }
 
             reader.close();
