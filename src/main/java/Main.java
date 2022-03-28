@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 import mips.Control;
@@ -13,10 +12,17 @@ public class Main {
         // initialize control
         Control control = new Control(instructions);
 
+        int testCnt = 0;
         while(control.isPropagating){
             control.propagate();
-            break;
+
+            testCnt++;
+            if(testCnt == 1){
+                break;
+            }
         }
 
+        // dump JSON
+        Parser.outputJSON(control.storageList, "test_output.json");
     }
 }

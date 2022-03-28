@@ -2,10 +2,13 @@ package util;
 
 import com.google.gson.Gson;
 import mips.Instruction;
+import mips.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ public class Parser {
 
         // parse instructions
         List<Instruction> insList = new ArrayList<>();
-        logger.info("Parsing instruction:");
+        logger.info("parsing instruction:");
         for(String str: strList){
             Instruction instruction = new Instruction(str);
             insList.add(instruction);
@@ -35,12 +38,13 @@ public class Parser {
         try {
             Gson gson = new Gson();
 
-            Reader reader = Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource(fileName).toURI()));
+            // Reader reader = Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource(fileName).toURI()));
+            Reader reader = Files.newBufferedReader(Paths.get(fileName));
 
             // convert JSON file to list
             List<String> list = gson.fromJson(reader, List.class);
 
-            logger.info("Parsing JSON:");
+            logger.info("parsing JSON:");
             for (String str: list) {
                 logger.info(str);
             }
@@ -55,10 +59,19 @@ public class Parser {
         }
     }
 
-//    public static void outputJSON(Storage storage){
-//        Gson gson = new Gson();
-//        String str = gson.toJson(storage);
-//        Storage newStorage = gson.fromJson(str, Storage.class);
-//        System.out.println(str);
-//    }
+    public static void outputJSON(List<Storage> storageList, String filename){
+        try {
+            Gson gson = new Gson();
+
+            Writer writer = new FileWriter(filename);
+
+            logger.info("output JSON");
+            String str = gson.toJson(storageList);
+            writer.write(str);
+
+            writer.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }

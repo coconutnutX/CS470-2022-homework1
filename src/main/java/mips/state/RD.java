@@ -11,7 +11,8 @@ public class RD {
      * check if there are enough resources to dispatch new instructions
      * if not, apply backpressure
      */
-    public static void checkBackpressure(Storage storage, Boolean applyBackpressure){
+    public static void checkBackpressure(Storage storage, Integer backpressure){
+        backpressure = 0;
         // TODO
     }
 

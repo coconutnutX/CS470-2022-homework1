@@ -5,6 +5,8 @@ import mips.state.CM;
 import mips.state.EX;
 import mips.state.FD;
 import mips.state.RD;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +21,11 @@ public class Control {
     private Gson gson;
 
     // intermediate results
-    private Boolean applyBackpressure;
+    private Integer backpressure;                     // indicate # fewer instructions to fetch, range(0,4)
     private HashMap<Integer, Integer> executingList;  // <PC, cycle executed>
     private HashMap<Integer, Integer> forwardingPath; // <PC, value>
+
+    private static Logger logger = LoggerFactory.getLogger(Control.class);
 
     public Control(List<Instruction> instructions){
         this.isPropagating = true;
@@ -33,7 +37,7 @@ public class Control {
 
         this.gson = new Gson();
 
-        this.applyBackpressure = false;
+        this.backpressure = 0;
     }
 
     /**
@@ -41,14 +45,16 @@ public class Control {
      * deep copy and modify the copied Storage
      */
     public void propagate(){
+        logger.info("---------- cycle " + (storageList.size()-1) + " ----------");
+
         // make a copy of all data structures to prepare the next state of the processor
         Storage storage = deepCopyLastStorage();
 
         // update the value according to the functionality of all units
         EX.execute(instructions, executingList, forwardingPath);
         CM.execute(storage, forwardingPath);
-        RD.checkBackpressure(storage, applyBackpressure);
-        FD.execute(storage, applyBackpressure);
+        RD.checkBackpressure(storage, backpressure);
+        FD.execute(storage, backpressure, instructions);
 
         // append current storage to list
         storageList.add(storage);

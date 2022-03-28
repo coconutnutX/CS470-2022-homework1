@@ -111,7 +111,6 @@ public class Storage {
         this.BusyBitTable = new boolean[64];
         this.ActiveList = new ArrayList<>();
         this.IntegerQueue = new ArrayList<>();
-        ActiveList.add(new ActiveListItem());
     }
 
 }
