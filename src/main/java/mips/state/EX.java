@@ -1,6 +1,8 @@
 package mips.state;
 
+import mips.ActiveListItem;
 import mips.IntegerQueueItem;
+import mips.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,7 @@ public class EX {
     /**
      * update executingList and forwardingPath
      */
-    public static void execute(HashMap<IntegerQueueItem, Integer> executing, HashMap<Integer, Integer> forwardingPath){
+    public static void execute(Storage storage, HashMap<IntegerQueueItem, Integer> executing, HashMap<Integer, Integer> forwardingPath){
         // clear forwarding path each cycle
         forwardingPath.clear();
 
@@ -37,6 +39,14 @@ public class EX {
 
                 // broadcast results to the forwarding path on the second ALU cycle
                 forwardingPath.put(PC, value);
+
+                // mark instruction done
+                storage.getActiveListItemByPC(PC).Done = true;
+
+                // update Physical Register File and Busy Bit Table
+                int phyReg = integerQueueItem.DestRegister;
+                storage.PhysicalRegisterFile[phyReg] = value;
+                storage.BusyBitTable[phyReg] = false;
             }
         }
 

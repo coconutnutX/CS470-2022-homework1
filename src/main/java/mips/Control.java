@@ -48,8 +48,8 @@ public class Control {
         Storage storage = deepCopyLastStorage();
 
         // update the value according to the functionality of all units
-        EX.execute(executing, forwardingPath);
-        // CM.execute(storage, forwardingPath);
+        EX.execute(storage, executing, forwardingPath);
+        CM.execute(storage, forwardingPath);
         IS.execute(storage, executing, forwardingPath, instructions);
         RD.execute(storage, instructions, forwardingPath);
         FD.execute(storage, instructions);

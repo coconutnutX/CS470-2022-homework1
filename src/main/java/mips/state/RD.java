@@ -32,10 +32,6 @@ public class RD {
 
             renameAndAllocate(storage, instructions, forwardingPath);
         }
-        
-        // observe the results of forwarding paths
-        // and update the Physical Register File as well as the Busy Bit Table
-        // TODO
     }
 
     private static void renameAndAllocate(Storage storage, List<Instruction> instructions, HashMap<Integer, Integer> forwardingPath){

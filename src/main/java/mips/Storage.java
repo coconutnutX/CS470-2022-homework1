@@ -90,4 +90,13 @@ public class Storage {
         this.IntegerQueue = new ArrayList<>();
     }
 
+    public ActiveListItem getActiveListItemByPC(int PC){
+        for(ActiveListItem activeListItem: ActiveList){
+            if(activeListItem.PC == PC){
+                return activeListItem;
+            }
+        }
+        return null;
+    }
+
 }
