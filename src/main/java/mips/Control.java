@@ -50,7 +50,7 @@ public class Control {
         // update the value according to the functionality of all units
         EX.execute(instructions, executingList, forwardingPath);
         CM.execute(storage, forwardingPath);
-        RD.execute(storage, instructions);
+        RD.execute(storage, instructions, forwardingPath);
         FD.execute(storage, instructions);
 
 

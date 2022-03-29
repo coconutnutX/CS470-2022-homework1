@@ -1,7 +1,7 @@
 package mips;
 
 public class Instruction {
-    public String instr;
+    public String instr; // NOTE: opCode of addi is add
     public Integer dest;
     public Integer opA;
     public Integer opB;

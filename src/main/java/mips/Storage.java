@@ -65,14 +65,6 @@ public class Storage {
      */
     public List<ActiveListItem> ActiveList;
 
-    public class ActiveListItem {
-        public boolean Done;
-        public boolean Exception;
-        public int LogicalDestination;
-        public int OldDestination;
-        public int PC;
-    }
-
     /**
      * - keeps all instructions awaiting issuing
      * - modeled with an array, and every entry records the operation information of a specific instruction
@@ -80,18 +72,6 @@ public class Storage {
      * - it is impossible to have more than 32 entries
      */
     public List<IntegerQueueItem> IntegerQueue;
-
-    public class IntegerQueueItem {
-        public int DestRegister;
-        public boolean OpAIsReady;
-        public int OpARegTag;
-        public int OpAValue;
-        public boolean OpBIsReady;
-        public int OpBRegTag;
-        public int OpBValue;
-        public String OpCode;
-        public int PC;
-    }
 
     public Storage() {
         this.PC = 0;
