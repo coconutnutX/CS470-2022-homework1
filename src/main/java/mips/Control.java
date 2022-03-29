@@ -54,9 +54,8 @@ public class Control {
         EX.execute(instructions, executingList, forwardingPath);
         CM.execute(storage, forwardingPath);
         RD.checkBackpressure(storage, backpressure);
-        RD.execute(storage, instructions);
         FD.execute(storage, backpressure, instructions);
-
+        RD.execute(storage, instructions);
 
         // append current storage to list
         storageList.add(storage);
