@@ -24,4 +24,10 @@ public class IntegerQueueItem {
     public String printOpB() {
         return "ready=" + OpBIsReady + " reg=" + OpBRegTag + " value=" + OpBValue;
     }
+
+    @Override
+    public String toString() {
+        // PC	Dest ID	OpA Ready	OpA Tag	OpA Value	OpB Ready	OpB Tag	OpB Value	OpCode
+        return PC + " " + DestRegister + " " + OpAIsReady + " " + OpARegTag + " " + OpAValue + " " + OpBIsReady + " " + OpBRegTag + " " + OpBValue + " " + OpCode;
+    }
 }

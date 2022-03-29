@@ -1,10 +1,7 @@
 package mips;
 
 import com.google.gson.Gson;
-import mips.state.CM;
-import mips.state.EX;
-import mips.state.FD;
-import mips.state.RD;
+import mips.state.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +18,8 @@ public class Control {
     private Gson gson;
 
     // intermediate results
-    private HashMap<Integer, Integer> executingList;  // <PC, cycle executed>
-    private HashMap<Integer, Integer> forwardingPath; // <PC, value>
+    private HashMap<IntegerQueueItem, Integer> executing; // <_, cycle executed>
+    private HashMap<Integer, Integer> forwardingPath;     // <PC, value>
 
     private static Logger logger = LoggerFactory.getLogger(Control.class);
 
@@ -30,11 +27,13 @@ public class Control {
         this.isPropagating = true;
         this.instructions = instructions;
         this.storageList = new ArrayList<>();
+
         // initialize storage
         Storage initialStorage = new Storage();
         storageList.add(initialStorage);
 
         this.gson = new Gson();
+        this.executing = new HashMap<>();
     }
 
     /**
@@ -48,11 +47,11 @@ public class Control {
         Storage storage = deepCopyLastStorage();
 
         // update the value according to the functionality of all units
-        EX.execute(instructions, executingList, forwardingPath);
+        EX.execute(instructions, executing, forwardingPath);
         CM.execute(storage, forwardingPath);
+        IS.execute(storage, executing);
         RD.execute(storage, instructions, forwardingPath);
         FD.execute(storage, instructions);
-
 
         // append current storage to list
         storageList.add(storage);
