@@ -29,15 +29,13 @@ public class IS {
         List<IntegerQueueItem> issuedItem = new ArrayList<>();
         for(int i=0; i < storage.IntegerQueue.size(); i++){
             IntegerQueueItem integerQueueItem = storage.IntegerQueue.get(i);
-            if(integerQueueItem.checkReady(storage, forwardingPath, instructions.get(integerQueueItem.PC))){
+            boolean ready = integerQueueItem.checkReady(storage, forwardingPath, instructions.get(integerQueueItem.PC));
+            if(ready && issuedItem.size()<4){
                 // issue ready instruction
                 executing.put(integerQueueItem, 0);
                 logger.info("issue: " + integerQueueItem.PC);
 
                 issuedItem.add(integerQueueItem);
-                if(issuedItem.size() == 4){
-                    break;
-                }
             }
         }
 
