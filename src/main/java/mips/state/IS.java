@@ -19,7 +19,7 @@ public class IS {
     private static Logger logger = LoggerFactory.getLogger(IS.class);
 
     /**
-     * issues ready instructions from the Integer Queue
+     * issue ready instructions from the Integer Queue
      */
     public static void execute(Storage storage, HashMap<IntegerQueueItem, Integer> executing){
 

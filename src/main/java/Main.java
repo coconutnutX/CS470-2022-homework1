@@ -17,7 +17,7 @@ public class Main {
             control.propagate();
 
             testCnt++;
-            if(testCnt == 3){
+            if(testCnt == 8){
                 break;
             }
         }

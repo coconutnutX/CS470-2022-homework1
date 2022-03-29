@@ -34,6 +34,7 @@ public class Control {
 
         this.gson = new Gson();
         this.executing = new HashMap<>();
+        this.forwardingPath = new HashMap<>();
     }
 
     /**
@@ -47,8 +48,8 @@ public class Control {
         Storage storage = deepCopyLastStorage();
 
         // update the value according to the functionality of all units
-        EX.execute(instructions, executing, forwardingPath);
-        CM.execute(storage, forwardingPath);
+        EX.execute(executing, forwardingPath);
+        // CM.execute(storage, forwardingPath);
         IS.execute(storage, executing);
         RD.execute(storage, instructions, forwardingPath);
         FD.execute(storage, instructions);
