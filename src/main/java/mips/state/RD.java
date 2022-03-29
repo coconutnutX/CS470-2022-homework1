@@ -58,62 +58,12 @@ public class RD {
         // allocate newly renamed entries in the Integer Queue
         IntegerQueueItem integerQueueItem = new IntegerQueueItem(phyReg, instruction.instr, PC);
 
-        // determine the state of operandA
-        int[] opA = checkOperandReady(storage, instruction.opA, forwardingPath);
-        integerQueueItem.OpARegTag = instruction.opA;
-        if(opA[0] != 0){
-            integerQueueItem.OpAIsReady = true;
-            integerQueueItem.OpAValue = opA[1];
-        }
-        logger.info("opA: [" + opA[0] + "] " + integerQueueItem.printOpA());
-
-        // determine the state of operandB
-        if(instruction.instr.equals("addi")){
-            integerQueueItem.OpCode = "add";
-
-            integerQueueItem.OpBIsReady = true;
-            integerQueueItem.OpBValue = instruction.opB;
-            logger.info("opB: [3] " + integerQueueItem.printOpB());
-        }else{
-            int[] opB = checkOperandReady(storage, instruction.opB, forwardingPath);
-            integerQueueItem.OpBRegTag = instruction.opB;
-            if(opB[0] == 1){
-                integerQueueItem.OpBIsReady = true;
-                integerQueueItem.OpBValue = opB[1];
-            }
-            logger.info("opB: [" + opB[0] + "] " + integerQueueItem.printOpB());
-        }
+        // determine the state of the operands
+        integerQueueItem.checkReady(storage, forwardingPath, instruction);
 
         storage.IntegerQueue.add(integerQueueItem);
     }
 
-    /**
-     * return: int[0]
-     * entry 1:
-     *  - 0-not ready
-     *  - 1-in physical register
-     *  - 2-from forwarding path
-     * entry 2: if ready, value of the operand
-     */
-    private static int[] checkOperandReady(Storage storage, int arcReg, HashMap<Integer, Integer> forwardingPath){
-        int ready = 0;
-        int value = 0;
 
-        int phyReg = storage.RegisterMapTable[arcReg];
-        if(!storage.BusyBitTable[phyReg]){
-            // (a) ready in the physical register file
-            ready = 1;
-            value = storage.PhysicalRegisterFile[phyReg];
-        }else{
-            // (b) ready from the forwarding path
-            if(forwardingPath.containsKey(phyReg)){
-                ready = 2;
-                value = forwardingPath.get(phyReg);
-            }
-        }
-        // (c) not produced yet
-
-        return new int[]{ready, value};
-    }
 
 }

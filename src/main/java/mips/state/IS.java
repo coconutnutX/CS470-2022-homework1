@@ -1,6 +1,7 @@
 package mips.state;
 
 import mips.Control;
+import mips.Instruction;
 import mips.IntegerQueueItem;
 import mips.Storage;
 import org.slf4j.Logger;
@@ -21,14 +22,14 @@ public class IS {
     /**
      * issue ready instructions from the Integer Queue
      */
-    public static void execute(Storage storage, HashMap<IntegerQueueItem, Integer> executing){
+    public static void execute(Storage storage, HashMap<IntegerQueueItem, Integer> executing, HashMap<Integer, Integer> forwardingPath, List<Instruction> instructions){
 
         // scans the Integer Queue, picks and issues at most four ready instructions
         // when more than four instructions are ready, the oldest instructions (with smaller PCs) are issued first
         List<IntegerQueueItem> issuedItem = new ArrayList<>();
         for(int i=0; i < storage.IntegerQueue.size(); i++){
             IntegerQueueItem integerQueueItem = storage.IntegerQueue.get(i);
-            if(integerQueueItem.OpAIsReady && integerQueueItem.OpBIsReady){
+            if(integerQueueItem.checkReady(storage, forwardingPath, instructions.get(integerQueueItem.PC))){
                 // issue ready instruction
                 executing.put(integerQueueItem, 0);
                 logger.info("issue: " + integerQueueItem.PC);
