@@ -17,27 +17,6 @@ public class RD {
     private static Logger logger = LoggerFactory.getLogger(RD.class);
 
     /**
-     * check if there are enough resources to dispatch new instructions
-     * if not, apply backpressure
-     */
-    public static void checkBackpressure(Storage storage, Integer backpressure){
-        backpressure = 0;
-
-        // check if there are enough physical registers,
-        // enough entries in the Active List,
-        // and enough entries in the Integer Queue.
-        int[] resourses = new int[4];
-        resourses[0] = storage.FreeList.size();
-        resourses[1] = 32 - storage.ActiveList.size();
-        resourses[2] = 32 - storage.IntegerQueue.size();
-        resourses[3] = 4;
-        // if not, apply back pressure to the previous stage
-        backpressure  = Arrays.stream(resourses).min().getAsInt();
-
-        logger.info("backpressure = " + backpressure);
-    }
-
-    /**
      * rename instructions and check operands
      */
     public static void execute(Storage storage, List<Instruction> instructions){

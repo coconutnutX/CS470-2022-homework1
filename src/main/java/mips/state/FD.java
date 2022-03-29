@@ -18,9 +18,9 @@ public class FD {
     /**
      * fetch instructions and update PC
      */
-    public static void execute(Storage storage, Integer backpressure, List<Instruction> instructions){
+    public static void execute(Storage storage, List<Instruction> instructions){
         int cnt = 0;
-        while(cnt < 4 - backpressure && storage.PC < instructions.size()){
+        while(cnt < 4  && storage.PC < instructions.size() && storage.DecodedPCs.size() < 4){
             logger.info("fetch: " + instructions.get(storage.PC));
             storage.DecodedPCs.add(storage.PC);
             storage.PC++;

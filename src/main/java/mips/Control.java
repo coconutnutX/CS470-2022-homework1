@@ -21,7 +21,6 @@ public class Control {
     private Gson gson;
 
     // intermediate results
-    private Integer backpressure;                     // indicate # fewer instructions to fetch, range(0,4)
     private HashMap<Integer, Integer> executingList;  // <PC, cycle executed>
     private HashMap<Integer, Integer> forwardingPath; // <PC, value>
 
@@ -36,8 +35,6 @@ public class Control {
         storageList.add(initialStorage);
 
         this.gson = new Gson();
-
-        this.backpressure = 0;
     }
 
     /**
@@ -53,9 +50,9 @@ public class Control {
         // update the value according to the functionality of all units
         EX.execute(instructions, executingList, forwardingPath);
         CM.execute(storage, forwardingPath);
-        RD.checkBackpressure(storage, backpressure);
-        FD.execute(storage, backpressure, instructions);
         RD.execute(storage, instructions);
+        FD.execute(storage, instructions);
+
 
         // append current storage to list
         storageList.add(storage);
