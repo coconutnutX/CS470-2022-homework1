@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class CM {
     /**
      * retiring instructions and recycling physical registers
      */
-    public static void execute(Storage storage, HashMap<Integer, Integer> forwardingPath){
+    public static void execute(Storage storage){
         // scans the Active list in the program order and picks instructions for retirement
         List<ActiveListItem> retiredItems = new ArrayList<>();
         for(int i=0; i<storage.ActiveList.size(); i++){
