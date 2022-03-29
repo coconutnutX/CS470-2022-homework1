@@ -12,14 +12,8 @@ public class Main {
         // initialize control
         Control control = new Control(instructions);
 
-        int testCnt = 0;
         while(control.isPropagating){
             control.propagate();
-
-            testCnt++;
-            if(testCnt == 8){
-                break;
-            }
         }
 
         // dump JSON

@@ -58,7 +58,7 @@ public class Control {
         storageList.add(storage);
 
         // check if finish (no instruction left & active list empty)
-        if(storage.PC == instructions.size()-1 && storage.ActiveList.isEmpty()){
+        if(storage.PC == instructions.size() && storage.ActiveList.isEmpty() && storage.DecodedPCs.isEmpty()){
             this.isPropagating = false;
         }
     }
