@@ -1,9 +1,6 @@
 package mips;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class Storage {
@@ -25,7 +22,7 @@ public class Storage {
      * - an array that buffers instructions that have been decoded but have not been renamed and dispatched yet
      * - initialized empty since no instruction is waiting for renaming and dispatching
      */
-    public List<Integer> DecodedPCs;
+    public Queue<Integer> DecodedPCs;
 
     /**
      * - an unsigned integer storing the value of the program counter of the instruction that triggers an exception
@@ -52,7 +49,7 @@ public class Storage {
      * - on initialization, physical registers from p32 to p63 are free
      * - so the Free List should be reset to an array with 32 elements from 32 to 63
      */
-    public List<Integer> FreeList;
+    public Queue<Integer> FreeList;
 
     /**
      * - indicates whether the value of a specific physical register will be generated from the Execution stage,
@@ -100,7 +97,7 @@ public class Storage {
         this.PC = 0;
         this.PhysicalRegisterFile = new int[64];
         Arrays.fill(PhysicalRegisterFile, 0);
-        this.DecodedPCs = new ArrayList<>();
+        this.DecodedPCs = new LinkedList<>();
         this.ExceptionPC = 0;
         this.Exception = false;
         this.RegisterMapTable = IntStream.range(0, 32).toArray();

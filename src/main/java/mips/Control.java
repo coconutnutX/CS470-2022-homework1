@@ -45,7 +45,7 @@ public class Control {
      * deep copy and modify the copied Storage
      */
     public void propagate(){
-        logger.info("---------- cycle " + (storageList.size()-1) + " ----------");
+        logger.info("---------- cycle " + storageList.size() + " ----------");
 
         // make a copy of all data structures to prepare the next state of the processor
         Storage storage = deepCopyLastStorage();
@@ -54,7 +54,9 @@ public class Control {
         EX.execute(instructions, executingList, forwardingPath);
         CM.execute(storage, forwardingPath);
         RD.checkBackpressure(storage, backpressure);
+        RD.execute(storage, instructions);
         FD.execute(storage, backpressure, instructions);
+
 
         // append current storage to list
         storageList.add(storage);
