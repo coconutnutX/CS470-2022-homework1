@@ -40,13 +40,18 @@ public class RD {
         int PC = storage.DecodedPCs.remove();
         int phyReg = storage.FreeList.remove();
 
-        // updated the Register Map Table and Free List accordingly
         Instruction instruction = instructions.get(PC);
+
+        // rename operands
+        instruction.phyOpA = storage.RegisterMapTable[instruction.opA];
+        instruction.phyOpB = storage.RegisterMapTable[instruction.opB];
+
+        // updated the Register Map Table and Free List accordingly
         int oldDestination = storage.RegisterMapTable[instruction.dest];
         storage.RegisterMapTable[instruction.dest] = phyReg;
         storage.BusyBitTable[phyReg] = true;
 
-        logger.info("rename: " + instruction + " -> " + phyReg);
+        logger.info("rename: " + instruction + " -> " + phyReg + " " + instruction.phyOpA + " " + instruction.phyOpB);
 
         // allocate newly renamed entries in the Active List
         storage.ActiveList.add(new ActiveListItem(instruction.dest, oldDestination, PC));

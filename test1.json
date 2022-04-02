@@ -1,0 +1,10 @@
+[
+"addi x00, x31, 0",
+"addi x01, x31, 1",
+"addi x02, x31, 2",
+"addi x03, x31, 3",
+"mulu x04, x00, x03",
+"mulu x05, x01, x02",
+"sub x04, x04, x05",
+"add x05, x00, x01"
+]

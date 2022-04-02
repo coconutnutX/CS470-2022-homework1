@@ -5,16 +5,18 @@ public class Instruction {
     public Integer dest;
     public Integer opA;
     public Integer opB;
+    public Integer phyOpA;
+    public Integer phyOpB;
 
     public Instruction(String str){
         String[] split = str.split(" ");
         this.instr = split[0];
-        this.dest = getRegId(split[1]);
-        this.opA = getRegId(split[2]);
+        this.dest = getRegId(split[1], 1);
+        this.opA = getRegId(split[2], 1);
         if(this.instr.equals("addi")){
             this.opB = Integer.parseInt(split[3]);
         }else{
-            this.opB = getRegId(split[3]);
+            this.opB = getRegId(split[3], 0);
         }
     }
 
@@ -23,7 +25,7 @@ public class Instruction {
         return this.instr + " " + this.dest + " " + this.opA + " " + this.opB;
     }
 
-    private Integer getRegId(String str){
-        return Integer.parseInt(str.substring(1,str.length()-1));
+    private Integer getRegId(String str, int ending){
+        return Integer.parseInt(str.substring(1,str.length()-ending));
     }
 }

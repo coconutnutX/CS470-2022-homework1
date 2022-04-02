@@ -1,6 +1,5 @@
 package mips;
 
-import mips.state.EX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +27,8 @@ public class IntegerQueueItem {
     public boolean checkReady(Storage storage, HashMap<Integer, Integer> forwardingPath, Instruction instruction) {
         // determine the state of operandA
         if(!OpAIsReady){
-            int[] opA = checkOperandReady(storage, instruction.opA, forwardingPath);
-            OpARegTag = instruction.opA;
+            int[] opA = checkOperandReady(storage, instruction.phyOpA, forwardingPath);
+            OpARegTag = instruction.phyOpA;
             if(opA[0] != 0){
                 OpAIsReady = true;
                 OpAValue = opA[1];
@@ -43,11 +42,11 @@ public class IntegerQueueItem {
                 OpCode = "add";
 
                 OpBIsReady = true;
-                OpBValue = instruction.opB;
+                OpBValue = instruction.phyOpB;
                 logger.info("opB: [3] " + printOpB());
             }else{
-                int[] opB = checkOperandReady(storage, instruction.opB, forwardingPath);
-                OpBRegTag = instruction.opB;
+                int[] opB = checkOperandReady(storage, instruction.phyOpB, forwardingPath);
+                OpBRegTag = instruction.phyOpB;
                 if(opB[0] == 1){
                     OpBIsReady = true;
                     OpBValue = opB[1];
@@ -67,11 +66,10 @@ public class IntegerQueueItem {
      *  - 2-from forwarding path
      * entry 2: if ready, value of the operand
      */
-    private static int[] checkOperandReady(Storage storage, int arcReg, HashMap<Integer, Integer> forwardingPath){
+    private static int[] checkOperandReady(Storage storage, int phyReg, HashMap<Integer, Integer> forwardingPath){
         int ready = 0;
         int value = 0;
 
-        int phyReg = storage.RegisterMapTable[arcReg];
         if(!storage.BusyBitTable[phyReg]){
             // (a) ready in the physical register file
             ready = 1;
