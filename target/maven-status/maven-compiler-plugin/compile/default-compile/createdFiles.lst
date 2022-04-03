@@ -1,0 +1,12 @@
+Main.class
+mips/state/CM.class
+mips/state/RD.class
+mips/Control.class
+mips/IntegerQueueItem.class
+mips/Storage.class
+mips/ActiveListItem.class
+mips/Instruction.class
+mips/state/EX.class
+mips/state/FD.class
+util/Parser.class
+mips/state/IS.class
