@@ -44,7 +44,9 @@ public class RD {
 
         // rename operands
         instruction.phyOpA = storage.RegisterMapTable[instruction.opA];
-        instruction.phyOpB = storage.RegisterMapTable[instruction.opB];
+        if(!instruction.instr.equals("addi")){
+            instruction.phyOpB = storage.RegisterMapTable[instruction.opB];
+        }
 
         // updated the Register Map Table and Free List accordingly
         int oldDestination = storage.RegisterMapTable[instruction.dest];

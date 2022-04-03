@@ -42,7 +42,7 @@ public class IntegerQueueItem {
                 OpCode = "add";
 
                 OpBIsReady = true;
-                OpBValue = instruction.phyOpB;
+                OpBValue = instruction.opB;
                 logger.info("opB: [3] " + printOpB());
             }else{
                 int[] opB = checkOperandReady(storage, instruction.phyOpB, forwardingPath);
