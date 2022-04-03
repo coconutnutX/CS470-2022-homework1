@@ -38,7 +38,7 @@ public class RD {
 
         // rename the instructions decoded from the previous stage
         int PC = storage.DecodedPCs.remove();
-        int phyReg = storage.FreeList.remove();
+        int phyReg = storage.FreeList.removeFirst();
 
         Instruction instruction = instructions.get(PC);
 

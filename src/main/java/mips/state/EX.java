@@ -33,19 +33,26 @@ public class EX {
                 executedItems.add(integerQueueItem);
 
                 int PC = integerQueueItem.PC;
-                int value = calculate(integerQueueItem);
-                logger.info("execution complete: " + PC);
+                try{
+                    int value = calculate(integerQueueItem);
+                    logger.info("execution complete: " + PC);
 
-                // broadcast results to the forwarding path on the second ALU cycle
-                forwardingPath.put(PC, value);
+                    // broadcast results to the forwarding path on the second ALU cycle
+                    forwardingPath.put(PC, value);
 
-                // mark instruction done
-                storage.getActiveListItemByPC(PC).Done = true;
+                    // mark instruction done
+                    storage.getActiveListItemByPC(PC).Done = true;
 
-                // update Physical Register File and Busy Bit Table
-                int phyReg = integerQueueItem.DestRegister;
-                storage.PhysicalRegisterFile[phyReg] = value;
-                storage.BusyBitTable[phyReg] = false;
+                    // update Physical Register File and Busy Bit Table
+                    int phyReg = integerQueueItem.DestRegister;
+                    storage.PhysicalRegisterFile[phyReg] = value;
+                    storage.BusyBitTable[phyReg] = false;
+                }catch(Exception e){
+                    logger.warn("exception in: " + PC);
+
+                    // mark exception
+                    storage.getActiveListItemByPC(PC).Exception = true;
+                }
             }
         }
 

@@ -2,7 +2,6 @@ import java.util.List;
 
 import mips.Control;
 import mips.Instruction;
-import mips.state.CM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Parser;
@@ -12,8 +11,8 @@ public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        String testFileName = args[0];
-        // String testFileName = "test.json";
+        // String testFileName = args[0];
+        String testFileName = "test7.json";
         logger.info("input file: " + testFileName);
 
         // read and parse instruction

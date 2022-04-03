@@ -49,7 +49,7 @@ public class Storage {
      * - on initialization, physical registers from p32 to p63 are free
      * - so the Free List should be reset to an array with 32 elements from 32 to 63
      */
-    public Queue<Integer> FreeList;
+    public Deque<Integer> FreeList;
 
     /**
      * - indicates whether the value of a specific physical register will be generated from the Execution stage,
