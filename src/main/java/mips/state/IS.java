@@ -30,7 +30,7 @@ public class IS {
         for(int i=0; i < storage.IntegerQueue.size(); i++){
             IntegerQueueItem integerQueueItem = storage.IntegerQueue.get(i);
             boolean ready = integerQueueItem.checkReady(storage, forwardingPath, instructions.get(integerQueueItem.PC));
-            if(ready && issuedItem.size()<4){
+            if(ready && issuedItem.size()<4 && executing.size()<4){
                 // issue ready instruction
                 executing.put(integerQueueItem, 0);
                 logger.info("issue: " + integerQueueItem.PC);

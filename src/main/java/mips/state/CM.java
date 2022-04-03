@@ -21,6 +21,7 @@ public class CM {
     public static void execute(Storage storage){
         // scans the Active list in the program order and picks instructions for retirement
         List<ActiveListItem> retiredItems = new ArrayList<>();
+        int cnt = 0;
         for(int i=0; i<storage.ActiveList.size(); i++){
             ActiveListItem activeListItem = storage.ActiveList.get(i);
             if(!activeListItem.Done){
@@ -33,6 +34,11 @@ public class CM {
             // recycling physical registers and push them back to the Free List
             storage.FreeList.add(activeListItem.OldDestination);
             logger.info("recycle physical register " + activeListItem.OldDestination);
+
+            cnt++;
+            if(cnt == 4){
+                break;
+            }
         }
 
         // remove retired items from Active List

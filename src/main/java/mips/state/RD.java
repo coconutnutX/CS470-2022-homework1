@@ -25,7 +25,7 @@ public class RD {
         // should not exceed 4
         while(storage.DecodedPCs.size() > 0){
             // check if there are enough physical resources
-            if(storage.FreeList.size() == 0 || storage.ActiveList.size() > 32 || storage.IntegerQueue.size() > 32){
+            if(storage.FreeList.size() == 0 || storage.ActiveList.size() > 31 || storage.IntegerQueue.size() > 31){
                 logger.warn("no enough physical resources");
                 break;
             }

@@ -7,7 +7,7 @@ import util.Parser;
 public class Main {
     public static void main(String[] args) {
         // read and parse instruction
-        List<Instruction> instructions = Parser.readInstruction("test.json");
+        List<Instruction> instructions = Parser.readInstruction("test4.json");
 
         // initialize control
         Control control = new Control(instructions);
@@ -17,6 +17,6 @@ public class Main {
         }
 
         // dump JSON
-        Parser.outputJSON(control.storageList, "test_output.json");
+        Parser.outputJSON(control.storageList, "test_output4.json");
     }
 }
