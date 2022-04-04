@@ -10,11 +10,13 @@
 │   │   ├── java
 │   │   │   ├── Main.java
 │   │   │   ├── mips
-│   │   │   │   ├── ActiveListItem.java
 │   │   │   │   ├── Control.java
-│   │   │   │   ├── Instruction.java
-│   │   │   │   ├── IntegerQueueItem.java
 │   │   │   │   ├── Storage.java
+│   │   │   │   ├── dataStructure
+│   │   │   │   │   ├── ActiveListItem.java
+│   │   │   │   │   ├── Instruction.java
+│   │   │   │   │   ├── IntegerQueueItem.java
+│   │   │   │   │   └── PhyRegFile.java
 │   │   │   │   └── state
 │   │   │   │       ├── CM.java
 │   │   │   │       ├── EX.java
