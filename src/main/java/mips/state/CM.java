@@ -1,14 +1,13 @@
 package mips.state;
 
-import mips.ActiveListItem;
-import mips.Instruction;
-import mips.IntegerQueueItem;
+import mips.dataStructure.ActiveListItem;
+import mips.dataStructure.Instruction;
+import mips.dataStructure.IntegerQueueItem;
 import mips.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 

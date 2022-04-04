@@ -1,4 +1,4 @@
-package mips;
+package mips.dataStructure;
 
 public class ActiveListItem {
     public boolean Done;

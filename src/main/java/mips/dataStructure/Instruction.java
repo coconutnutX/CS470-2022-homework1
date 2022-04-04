@@ -1,4 +1,4 @@
-package mips;
+package mips.dataStructure;
 
 public class Instruction {
     public String instr; // NOTE: opCode of addi is add

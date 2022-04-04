@@ -1,7 +1,7 @@
 import java.util.List;
 
 import mips.Control;
-import mips.Instruction;
+import mips.dataStructure.Instruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.Parser;

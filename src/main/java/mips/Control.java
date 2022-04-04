@@ -1,6 +1,8 @@
 package mips;
 
 import com.google.gson.Gson;
+import mips.dataStructure.Instruction;
+import mips.dataStructure.IntegerQueueItem;
 import mips.state.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

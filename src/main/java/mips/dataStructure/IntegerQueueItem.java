@@ -1,5 +1,6 @@
-package mips;
+package mips.dataStructure;
 
+import mips.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

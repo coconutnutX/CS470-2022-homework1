@@ -1,5 +1,9 @@
 package mips;
 
+import mips.dataStructure.ActiveListItem;
+import mips.dataStructure.IntegerQueueItem;
+import mips.dataStructure.PhyRegFile;
+
 import java.util.*;
 import java.util.stream.IntStream;
 

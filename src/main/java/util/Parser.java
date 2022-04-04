@@ -1,8 +1,8 @@
 package util;
 
 import com.google.gson.*;
-import mips.Instruction;
-import mips.PhyRegFile;
+import mips.dataStructure.Instruction;
+import mips.dataStructure.PhyRegFile;
 import mips.Storage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

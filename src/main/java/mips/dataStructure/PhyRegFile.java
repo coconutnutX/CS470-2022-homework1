@@ -1,4 +1,4 @@
-package mips;
+package mips.dataStructure;
 
 /**
  * an array of 64 unsigned 64bit integers

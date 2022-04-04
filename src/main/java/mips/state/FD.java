@@ -1,6 +1,6 @@
 package mips.state;
 
-import mips.Instruction;
+import mips.dataStructure.Instruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
