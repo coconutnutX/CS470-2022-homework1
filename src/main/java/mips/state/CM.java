@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -60,12 +61,13 @@ public class CM {
         }
     }
 
-    public static void executeExceptionMode(Storage storage, HashMap<IntegerQueueItem, Integer> executing, List<Instruction> instructions){
+    public static void executeExceptionMode(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2, List<Instruction> instructions){
         // in exception mode
         storage.PC = 0x10000;
         storage.DecodedPCs.clear();
         storage.IntegerQueue.clear();
         executing.clear();
+        executing2.clear();
 
         // scans the Active list in reversed program order and picks instructions to recover
         List<ActiveListItem> recoveredItems = new ArrayList<>();

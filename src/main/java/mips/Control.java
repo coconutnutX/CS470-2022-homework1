@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Control {
@@ -18,7 +19,8 @@ public class Control {
     private Gson gson;
 
     // intermediate results
-    private HashMap<IntegerQueueItem, Integer> executing; // <_, cycle executed>
+    private HashSet<IntegerQueueItem> executing;          // instructions being executed in the 1st cycle
+    private HashSet<IntegerQueueItem> executing2;         // instructions being executed in the 2nd cycle
     private HashMap<Integer, Integer> forwardingPath;     // <PC, value>
 
     private static Logger logger = LoggerFactory.getLogger(Control.class);
@@ -33,7 +35,8 @@ public class Control {
         storageList.add(initialStorage);
 
         this.gson = new Gson();
-        this.executing = new HashMap<>();
+        this.executing = new HashSet<>();
+        this.executing2 = new HashSet<>();
         this.forwardingPath = new HashMap<>();
     }
 
@@ -50,12 +53,12 @@ public class Control {
         if(!storage.Exception){
             // update the value according to the functionality of all units
             CM.execute(storage);
-            EX.execute(storage, executing, forwardingPath);
+            EX.execute(storage, executing, executing2, forwardingPath);
             IS.execute(storage, executing, forwardingPath, instructions);
             RD.execute(storage, instructions, forwardingPath);
             FD.execute(storage, instructions);
         }else{
-            CM.executeExceptionMode(storage, executing, instructions);
+            CM.executeExceptionMode(storage, executing, executing2, instructions);
         }
 
         // append current storage to list

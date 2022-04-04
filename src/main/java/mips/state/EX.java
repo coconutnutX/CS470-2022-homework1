@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -19,47 +20,42 @@ public class EX {
     /**
      * update executingList and forwardingPath
      */
-    public static void execute(Storage storage, HashMap<IntegerQueueItem, Integer> executing, HashMap<Integer, Integer> forwardingPath){
+    public static void execute(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2, HashMap<Integer, Integer> forwardingPath){
         // clear forwarding path each cycle
         forwardingPath.clear();
 
-        List<IntegerQueueItem> executedItems = new ArrayList<>();
-        for(IntegerQueueItem integerQueueItem: executing.keySet()){
-            int stage = executing.get(integerQueueItem);
-            // ALUs have two-cycle latency
-            if(stage < 1){
-                executing.put(integerQueueItem, stage + 1);
-            }else{
-                executedItems.add(integerQueueItem);
+        // instructions in the 2nd cycle
+        for(IntegerQueueItem integerQueueItem: executing2){
+            int PC = integerQueueItem.PC;
+            try{
+                int value = calculate(integerQueueItem);
+                logger.info("execution complete: " + PC);
 
-                int PC = integerQueueItem.PC;
-                try{
-                    int value = calculate(integerQueueItem);
-                    logger.info("execution complete: " + PC);
+                // broadcast results to the forwarding path on the second ALU cycle
+                forwardingPath.put(PC, value);
 
-                    // broadcast results to the forwarding path on the second ALU cycle
-                    forwardingPath.put(PC, value);
+                // mark instruction done
+                storage.getActiveListItemByPC(PC).Done = true;
 
-                    // mark instruction done
-                    storage.getActiveListItemByPC(PC).Done = true;
+                // update Physical Register File and Busy Bit Table
+                int phyReg = integerQueueItem.DestRegister;
+                storage.PhysicalRegisterFile[phyReg] = value;
+                storage.BusyBitTable[phyReg] = false;
+            }catch(Exception e){
+                logger.warn("exception in: " + PC);
 
-                    // update Physical Register File and Busy Bit Table
-                    int phyReg = integerQueueItem.DestRegister;
-                    storage.PhysicalRegisterFile[phyReg] = value;
-                    storage.BusyBitTable[phyReg] = false;
-                }catch(Exception e){
-                    logger.warn("exception in: " + PC);
-
-                    // mark exception
-                    storage.getActiveListItemByPC(PC).Exception = true;
-                }
+                // mark exception
+                storage.getActiveListItemByPC(PC).Exception = true;
+                storage.getActiveListItemByPC(PC).Done = true;
             }
         }
+        executing2.clear();
 
-        // remove executed items
-        for(IntegerQueueItem integerQueueItem: executedItems){
-            executing.remove(integerQueueItem);
+        // instructions in the 1st cycle
+        for(IntegerQueueItem integerQueueItem: executing){
+            executing2.add(integerQueueItem);
         }
+        executing.clear();
     }
 
     private static int calculate(IntegerQueueItem integerQueueItem){
