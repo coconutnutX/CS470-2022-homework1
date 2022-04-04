@@ -16,7 +16,7 @@ public class Storage {
      * - each element is an unsigned 64bit integer
      * - initialized to zero on reset
      */
-    public int[] PhysicalRegisterFile;
+    public PhyRegFile PhysicalRegisterFile;
 
     /**
      * - an array that buffers instructions that have been decoded but have not been renamed and dispatched yet
@@ -75,8 +75,7 @@ public class Storage {
 
     public Storage() {
         this.PC = 0;
-        this.PhysicalRegisterFile = new int[64];
-        Arrays.fill(PhysicalRegisterFile, 0);
+        this.PhysicalRegisterFile = new PhyRegFile();
         this.DecodedPCs = new LinkedList<>();
         this.ExceptionPC = 0;
         this.Exception = false;

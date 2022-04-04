@@ -73,7 +73,7 @@ public class IntegerQueueItem {
         if(!storage.BusyBitTable[phyReg]){
             // (a) ready in the physical register file
             ready = 1;
-            value = storage.PhysicalRegisterFile[phyReg];
+            value = storage.PhysicalRegisterFile.arr[phyReg];
         }else{
             // (b) ready from the forwarding path
             if(forwardingPath.containsKey(phyReg)){

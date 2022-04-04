@@ -39,7 +39,7 @@ public class EX {
 
                 // update Physical Register File and Busy Bit Table
                 int phyReg = integerQueueItem.DestRegister;
-                storage.PhysicalRegisterFile[phyReg] = value;
+                storage.PhysicalRegisterFile.arr[phyReg] = value;
                 storage.BusyBitTable[phyReg] = false;
             }catch(Exception e){
                 logger.warn("exception in: " + PC);
