@@ -78,7 +78,7 @@ public class CM {
             int phyDest = storage.RegisterMapTable[activeListItem.LogicalDestination];
             storage.RegisterMapTable[activeListItem.LogicalDestination] = activeListItem.OldDestination;
 
-            storage.FreeList.addFirst(phyDest);
+            storage.FreeList.addLast(phyDest);
             storage.BusyBitTable[phyDest] = false;
 
             recoveredItems.add(activeListItem);
