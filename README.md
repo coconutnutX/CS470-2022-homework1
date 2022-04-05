@@ -35,6 +35,8 @@
 
 ## Stages
 
+![pipeline](./pipeline.jpg)
+
 ## I/O
 
 # Run
