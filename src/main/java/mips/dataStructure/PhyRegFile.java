@@ -5,9 +5,9 @@ package mips.dataStructure;
  * this class is used for custom serialization
  */
 public class PhyRegFile {
-    public int[] arr;
+    public long[] arr;
 
     public PhyRegFile(){
-        this.arr = new int[64];
+        this.arr = new long[64];
     }
 }

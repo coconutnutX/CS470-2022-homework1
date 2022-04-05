@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 
 public class IntegerQueueItem {
-    public int DestRegister;
+    public long DestRegister;
     public boolean OpAIsReady;
-    public int OpARegTag;
-    public int OpAValue;
+    public long OpARegTag;
+    public long OpAValue;
     public boolean OpBIsReady;
-    public int OpBRegTag;
-    public int OpBValue;
+    public long OpBRegTag;
+    public long OpBValue;
     public String OpCode;
     public int PC;
 
@@ -25,10 +25,10 @@ public class IntegerQueueItem {
         this.PC = PC;
     }
 
-    public boolean checkReady(Storage storage, HashMap<Integer, Integer> forwardingPath, Instruction instruction) {
+    public boolean checkReady(Storage storage, HashMap<Integer, Long> forwardingPath, Instruction instruction) {
         // determine the state of operandA
         if(!OpAIsReady){
-            int[] opA = checkOperandReady(storage, instruction.phyOpA, forwardingPath);
+            long[] opA = checkOperandReady(storage, instruction.phyOpA, forwardingPath);
             OpARegTag = instruction.phyOpA;
             if(opA[0] != 0){
                 OpAIsReady = true;
@@ -46,7 +46,7 @@ public class IntegerQueueItem {
                 OpBValue = instruction.opB;
                 logger.info("opB: [3] " + printOpB());
             }else{
-                int[] opB = checkOperandReady(storage, instruction.phyOpB, forwardingPath);
+                long[] opB = checkOperandReady(storage, instruction.phyOpB, forwardingPath);
                 OpBRegTag = instruction.phyOpB;
                 if(opB[0] == 1){
                     OpBIsReady = true;
@@ -67,14 +67,14 @@ public class IntegerQueueItem {
      *  - 2-from forwarding path
      * entry 2: if ready, value of the operand
      */
-    private static int[] checkOperandReady(Storage storage, int phyReg, HashMap<Integer, Integer> forwardingPath){
-        int ready = 0;
-        int value = 0;
+    private static long[] checkOperandReady(Storage storage, long phyReg, HashMap<Integer, Long> forwardingPath){
+        long ready = 0;
+        long value = 0;
 
-        if(!storage.BusyBitTable[phyReg]){
+        if(!storage.BusyBitTable[(int)phyReg]){
             // (a) ready in the physical register file
             ready = 1;
-            value = storage.PhysicalRegisterFile.arr[phyReg];
+            value = storage.PhysicalRegisterFile.arr[(int)phyReg];
         }else{
             // (b) ready from the forwarding path
             if(forwardingPath.containsKey(phyReg)){
@@ -84,7 +84,7 @@ public class IntegerQueueItem {
         }
         // (c) not produced yet
 
-        return new int[]{ready, value};
+        return new long[]{ready, value};
     }
 
     public String printOpA() {

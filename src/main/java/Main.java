@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         // String testFileName = args[0];
-        String testFileName = "test.json";
+        String testFileName = "test_5.json";
         logger.info("input file: " + testFileName);
 
         // read and parse instruction

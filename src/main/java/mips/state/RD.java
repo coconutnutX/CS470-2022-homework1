@@ -20,7 +20,7 @@ public class RD {
     /**
      * rename instructions and check operands
      */
-    public static void execute(Storage storage, List<Instruction> instructions, HashMap<Integer, Integer> forwardingPath){
+    public static void execute(Storage storage, List<Instruction> instructions, HashMap<Integer, Long> forwardingPath){
 
         // should not exceed 4
         while(storage.DecodedPCs.size() > 0){
@@ -34,7 +34,7 @@ public class RD {
         }
     }
 
-    private static void renameAndAllocate(Storage storage, List<Instruction> instructions, HashMap<Integer, Integer> forwardingPath){
+    private static void renameAndAllocate(Storage storage, List<Instruction> instructions, HashMap<Integer, Long> forwardingPath){
 
         // rename the instructions decoded from the previous stage
         int PC = storage.DecodedPCs.remove();
@@ -43,20 +43,20 @@ public class RD {
         Instruction instruction = instructions.get(PC);
 
         // rename operands
-        instruction.phyOpA = storage.RegisterMapTable[instruction.opA];
+        instruction.phyOpA = storage.RegisterMapTable[(int)instruction.opA];
         if(!instruction.instr.equals("addi")){
-            instruction.phyOpB = storage.RegisterMapTable[instruction.opB];
+            instruction.phyOpB = storage.RegisterMapTable[(int)instruction.opB];
         }
 
         // updated the Register Map Table and Free List accordingly
-        int oldDestination = storage.RegisterMapTable[instruction.dest];
-        storage.RegisterMapTable[instruction.dest] = phyReg;
+        int oldDestination = storage.RegisterMapTable[(int)instruction.dest];
+        storage.RegisterMapTable[(int)instruction.dest] = phyReg;
         storage.BusyBitTable[phyReg] = true;
 
         logger.info("rename: " + instruction + " -> " + phyReg + " " + instruction.phyOpA + " " + instruction.phyOpB);
 
         // allocate newly renamed entries in the Active List
-        storage.ActiveList.add(new ActiveListItem(instruction.dest, oldDestination, PC));
+        storage.ActiveList.add(new ActiveListItem((int)instruction.dest, oldDestination, PC));
 
         // allocate newly renamed entries in the Integer Queue
         IntegerQueueItem integerQueueItem = new IntegerQueueItem(phyReg, instruction.instr, PC);

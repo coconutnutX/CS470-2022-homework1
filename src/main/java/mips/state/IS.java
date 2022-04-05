@@ -18,7 +18,7 @@ public class IS {
     /**
      * issue ready instructions from the Integer Queue
      */
-    public static void execute(Storage storage, HashSet<IntegerQueueItem> executing, HashMap<Integer, Integer> forwardingPath, List<Instruction> instructions){
+    public static void execute(Storage storage, HashSet<IntegerQueueItem> executing, HashMap<Integer, Long> forwardingPath, List<Instruction> instructions){
 
         // scans the Integer Queue, picks and issues at most four ready instructions
         // when more than four instructions are ready, the oldest instructions (with smaller PCs) are issued first

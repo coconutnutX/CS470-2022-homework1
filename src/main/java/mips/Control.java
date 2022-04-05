@@ -23,7 +23,7 @@ public class Control {
     // intermediate results
     private HashSet<IntegerQueueItem> executing;          // instructions being executed in the 1st cycle
     private HashSet<IntegerQueueItem> executing2;         // instructions being executed in the 2nd cycle
-    private HashMap<Integer, Integer> forwardingPath;     // <PC, value>
+    private HashMap<Integer, Long> forwardingPath;        // <PC, value>
 
     private static Logger logger = LoggerFactory.getLogger(Control.class);
 

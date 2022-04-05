@@ -2,11 +2,11 @@ package mips.dataStructure;
 
 public class Instruction {
     public String instr; // NOTE: opCode of addi is add
-    public Integer dest;
-    public Integer opA;
-    public Integer opB;
-    public Integer phyOpA;
-    public Integer phyOpB;
+    public long dest;
+    public long opA;
+    public long opB;
+    public long phyOpA;
+    public long phyOpB;
 
     public Instruction(String str){
         String[] split = str.split(" ");
@@ -14,7 +14,7 @@ public class Instruction {
         this.dest = getRegId(split[1], 1);
         this.opA = getRegId(split[2], 1);
         if(this.instr.equals("addi")){
-            this.opB = Integer.parseInt(split[3]);
+            this.opB = Long.parseLong(split[3]);
         }else{
             this.opB = getRegId(split[3], 0);
         }
@@ -25,7 +25,7 @@ public class Instruction {
         return this.instr + " " + this.dest + " " + this.opA + " " + this.opB;
     }
 
-    private Integer getRegId(String str, int ending){
-        return Integer.parseInt(str.substring(1,str.length()-ending));
+    private Long getRegId(String str, int ending){
+        return Long.parseLong(str.substring(1,str.length()-ending));
     }
 }

@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,14 +27,27 @@ public class Parser {
         public JsonElement serialize(PhyRegFile src, Type typeOfSrc, JsonSerializationContext context) {
             JsonArray ret = new JsonArray();
 
-            for(int value: src.arr){
-                String unsignedIntString = Integer.toUnsignedString(value);
-                ret.add(Long.valueOf(unsignedIntString));
+            for(long value: src.arr){
+//                String unsignedString = Long.toUnsignedString(value);
+                ret.add(toUnsignedBigInteger(value));
             }
 
             return ret;
         }
     };
+
+    private static BigInteger toUnsignedBigInteger(long i) {
+        if (i >= 0L)
+            return BigInteger.valueOf(i);
+        else {
+            int upper = (int) (i >>> 32);
+            int lower = (int) i;
+
+            // return (upper << 32) + lower
+            return (BigInteger.valueOf(Integer.toUnsignedLong(upper))).shiftLeft(32).
+                    add(BigInteger.valueOf(Integer.toUnsignedLong(lower)));
+        }
+    }
 
     public static List<Instruction> readInstruction(String fileName){
         // read JSON file

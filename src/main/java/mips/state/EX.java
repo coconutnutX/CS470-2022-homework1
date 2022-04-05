@@ -18,7 +18,7 @@ public class EX {
     /**
      * update executingList and forwardingPath
      */
-    public static void execute(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2, HashMap<Integer, Integer> forwardingPath){
+    public static void execute(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2, HashMap<Integer, Long> forwardingPath){
         // clear forwarding path each cycle
         forwardingPath.clear();
 
@@ -26,7 +26,7 @@ public class EX {
         for(IntegerQueueItem integerQueueItem: executing2){
             int PC = integerQueueItem.PC;
             try{
-                int value = calculate(integerQueueItem);
+                long value = calculate(integerQueueItem);
                 logger.info("execution complete: " + PC);
 
                 // broadcast results to the forwarding path on the second ALU cycle
@@ -36,9 +36,9 @@ public class EX {
                 storage.getActiveListItemByPC(PC).Done = true;
 
                 // update Physical Register File and Busy Bit Table
-                int phyReg = integerQueueItem.DestRegister;
-                storage.PhysicalRegisterFile.arr[phyReg] = value;
-                storage.BusyBitTable[phyReg] = false;
+                long phyReg = integerQueueItem.DestRegister;
+                storage.PhysicalRegisterFile.arr[(int)phyReg] = value;
+                storage.BusyBitTable[(int)phyReg] = false;
             }catch(Exception e){
                 logger.warn("exception in: " + PC);
 
@@ -56,18 +56,18 @@ public class EX {
         executing.clear();
     }
 
-    private static int calculate(IntegerQueueItem integerQueueItem){
-        int value = 0;
-        int a = integerQueueItem.OpAValue;
-        int b = integerQueueItem.OpBValue;
+    private static long calculate(IntegerQueueItem integerQueueItem){
+        long value = 0;
+        long a = integerQueueItem.OpAValue;
+        long b = integerQueueItem.OpBValue;
 
         switch (integerQueueItem.OpCode) {
             // add, subtract, and multiply are bit-wise identical if the two operands are regarded as both being signed or both being unsigned
             case "add": value = a + b; break;
             case "sub": value = a - b; break;
             case "mulu": value = a * b; break;
-            case "divu": value = Integer.divideUnsigned(a, b); break;
-            case "remu": value = Integer.remainderUnsigned(a, b); break;
+            case "divu": value = Long.divideUnsigned(a, b); break;
+            case "remu": value = Long.remainderUnsigned(a, b); break;
             default: logger.warn("unknown OpCode");
         }
 
