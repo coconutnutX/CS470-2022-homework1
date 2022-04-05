@@ -10,31 +10,32 @@
 │   │   ├── java
 │   │   │   ├── Main.java
 │   │   │   ├── mips
-│   │   │   │   ├── Control.java
-│   │   │   │   ├── Storage.java
+│   │   │   │   ├── Control.java    // Main simulation logic
+│   │   │   │   ├── Storage.java    // Store state of the processor
 │   │   │   │   ├── dataStructure
 │   │   │   │   │   ├── ActiveListItem.java
 │   │   │   │   │   ├── Instruction.java
 │   │   │   │   │   ├── IntegerQueueItem.java
 │   │   │   │   │   └── PhyRegFile.java
-│   │   │   │   └── state
-│   │   │   │       ├── CM.java
-│   │   │   │       ├── EX.java
-│   │   │   │       ├── FD.java
-│   │   │   │       ├── IS.java
-│   │   │   │       └── RD.java
+│   │   │   │   └── state           // functions in each stage
+│   │   │   │       ├── FD.java     // 1. Fetch and Decode
+│   │   │   │       └── RD.java     // 2. Rename and Dispatch
+│   │   │   │       ├── IS.java     // 3. Issue
+│   │   │   │       ├── EX.java     // 4. Execute
+│   │   │   │       ├── CM.java     // 5. Commit
 │   │   │   └── util
-│   │   │       └── Parser.java
+│   │   │       └── Parser.java     // input and output JSON
 │   │   └── resources
 │   └── test
 │       └── java
 └── target
 ```
 
-1. The program reads a json file in Main.java, run some simulations, and outputs a json file.
-2. Main simulation logic is in Control.propagate().
-3. It initializes an empty Storage, make a deep copy at the beginning of each cycle, and modify the copy.
-4. Functions in each state are in the state package. (i.e. FD/RD/IS/EX/CM.java)
+# Implementation Details
+
+## Stages
+
+## I/O
 
 # Run
 
