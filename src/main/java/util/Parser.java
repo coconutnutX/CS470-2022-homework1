@@ -21,18 +21,34 @@ public class Parser {
 
     private static Logger logger = LoggerFactory.getLogger(Parser.class);
 
-    // for custom serialization (int to unsigned)
+    /**
+     * use for custom serialization (long to unsigned in PhysicalRegisterFile)
+     */
     private static JsonSerializer<PhyRegFile> serializer = new JsonSerializer<PhyRegFile>() {
         @Override
         public JsonElement serialize(PhyRegFile src, Type typeOfSrc, JsonSerializationContext context) {
             JsonArray ret = new JsonArray();
 
             for(long value: src.arr){
-//                String unsignedString = Long.toUnsignedString(value);
                 ret.add(toUnsignedBigInteger(value));
             }
 
             return ret;
+        }
+    };
+
+    /**
+     * use for custom serialization (skip fields in Storage)
+     */
+    private static ExclusionStrategy strategy = new ExclusionStrategy() {
+        @Override
+        public boolean shouldSkipClass(Class<?> clazz) {
+            return false;
+        }
+
+        @Override
+        public boolean shouldSkipField(FieldAttributes field) {
+            return field.getAnnotation(Storage.Exclude.class) != null;
         }
     };
 
@@ -91,7 +107,7 @@ public class Parser {
 
     public static void outputJSON(List<Storage> storageList, String filename){
         try {
-            GsonBuilder gsonBuilder = new GsonBuilder();
+            GsonBuilder gsonBuilder = new GsonBuilder().addSerializationExclusionStrategy(strategy);
             gsonBuilder.registerTypeAdapter(PhyRegFile.class, serializer);
 
             Gson customGson = gsonBuilder.create();

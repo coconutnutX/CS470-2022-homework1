@@ -4,6 +4,10 @@ import mips.dataStructure.ActiveListItem;
 import mips.dataStructure.IntegerQueueItem;
 import mips.dataStructure.PhyRegFile;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -44,8 +48,14 @@ public class Storage {
      * - to mark enter exception mode in the next cycle
      * - use transient to exclude this field when serializing
      */
-    public transient boolean EnterException;
-    public transient int EnterExceptionPC;
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.FIELD)
+    public @interface Exclude {}
+
+    @Exclude
+    public boolean EnterException;
+    @Exclude
+    public int EnterExceptionPC;
 
     /**
      * - records the mapping relationship between architectural and physical registers
