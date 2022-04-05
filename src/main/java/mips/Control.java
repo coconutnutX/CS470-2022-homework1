@@ -52,7 +52,7 @@ public class Control {
         // make a copy of all data structures to prepare the next state of the processor
         Storage storage = deepCopyLastStorage();
 
-        if(!storage.Exception){
+        if(!storage.EnterException){
             // update the value according to the functionality of all units
             CM.execute(storage);
             EX.execute(storage, executing, executing2, forwardingPath);
@@ -60,13 +60,14 @@ public class Control {
             RD.execute(storage, instructions, forwardingPath);
             FD.execute(storage, instructions);
         }else{
-            CM.executeExceptionMode(storage, executing, executing2, instructions);
+            // exception recovering
+            CM.executeExceptionMode(storage, executing, executing2);
         }
 
         // append current storage to list
         storageList.add(storage);
 
-        if(!storage.Exception){
+        if(!storage.EnterException){
             // check if finish (no instruction left & active list empty)
             if(storage.PC == instructions.size() && storage.ActiveList.isEmpty() && storage.DecodedPCs.isEmpty()){
                 this.isPropagating = false;

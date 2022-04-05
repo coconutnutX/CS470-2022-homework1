@@ -29,12 +29,10 @@ public class CM {
             ActiveListItem activeListItem = storage.ActiveList.get(i);
 
             if(activeListItem.Exception){
-                // record PC and set exception flag
-                storage.Exception = true;
-                storage.ExceptionPC = activeListItem.PC;
-                break;
-
                 // enter exception mode in the next cycle
+                storage.EnterException = true;
+                storage.EnterExceptionPC = activeListItem.PC;
+                break;
             }
 
             if(!activeListItem.Done){
@@ -60,13 +58,20 @@ public class CM {
         }
     }
 
-    public static void executeExceptionMode(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2, List<Instruction> instructions){
-        // in exception mode
-        storage.PC = 0x10000;
-        storage.DecodedPCs.clear();
-        storage.IntegerQueue.clear();
-        executing.clear();
-        executing2.clear();
+    public static void executeExceptionMode(Storage storage, HashSet<IntegerQueueItem> executing, HashSet<IntegerQueueItem> executing2){
+        // first cycle in exception recovery
+        if(!storage.Exception){
+            // record PC and set exception flag
+            storage.Exception = true;
+            storage.ExceptionPC = storage.EnterExceptionPC;
+
+            // reset other structures
+            storage.PC = 0x10000;
+            storage.DecodedPCs.clear();
+            storage.IntegerQueue.clear();
+            executing.clear();
+            executing2.clear();
+        }
 
         // scans the Active list in reversed program order and picks instructions to recover
         List<ActiveListItem> recoveredItems = new ArrayList<>();

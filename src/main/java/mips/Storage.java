@@ -41,6 +41,13 @@ public class Storage {
     public boolean Exception;
 
     /**
+     * - to mark enter exception mode in the next cycle
+     * - use transient to exclude this field when serializing
+     */
+    public transient boolean EnterException;
+    public transient int EnterExceptionPC;
+
+    /**
      * - records the mapping relationship between architectural and physical registers
      * - an array with 32 elements
      * - on initialization, all architectural registers are mapped to physical registers with the same id
@@ -83,6 +90,8 @@ public class Storage {
         this.DecodedPCs = new LinkedList<>();
         this.ExceptionPC = 0;
         this.Exception = false;
+        this.EnterException = false;
+        this.EnterExceptionPC = 0;
         this.RegisterMapTable = IntStream.range(0, 32).toArray();
         this.FreeList = new LinkedList<>();
         for(int i=32; i<=63; i++){
