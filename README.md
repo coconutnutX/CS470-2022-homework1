@@ -33,11 +33,25 @@
 
 # Implementation Details
 
-## Stages
-
 ![pipeline](./pipeline.jpg)
 
-## I/O
+## Data structures
+
+The Storage object contains all data structures in the processor.
+
+The program keeps a list of Storage representing the data in each cycle.
+
+The program initilizes a Storage in cycle 0, and makes a deep copy in each each subsequent cycle.
+
+## Execution order
+
+Since later stages may recycle resources, and earlier stages can use them in the same cycle. In Control.propagate(), the stages are processed in reverse order.
+
+## Dependency
+
+Use [Gson](https://github.com/google/gson) to convert JSON/Java Object, and for serialization/deserialization when deep copying Storage.
+
+Use [Logback](https://logback.qos.ch/) to log intermediate results.
 
 # Run
 
