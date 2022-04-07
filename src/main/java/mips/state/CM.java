@@ -1,7 +1,6 @@
 package mips.state;
 
 import mips.dataStructure.ActiveListItem;
-import mips.dataStructure.Instruction;
 import mips.dataStructure.IntegerQueueItem;
 import mips.Storage;
 import org.slf4j.Logger;
