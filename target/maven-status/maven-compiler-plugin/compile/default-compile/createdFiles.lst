@@ -1,0 +1,16 @@
+mips/state/RD.class
+mips/dataStructure/IntegerQueueItem.class
+mips/Storage.class
+mips/Storage$Exclude.class
+mips/state/FD.class
+util/Parser.class
+Main.class
+mips/state/CM.class
+mips/dataStructure/Instruction.class
+util/Parser$1.class
+mips/Control.class
+util/Parser$2.class
+mips/dataStructure/ActiveListItem.class
+mips/state/EX.class
+mips/dataStructure/PhyRegFile.class
+mips/state/IS.class
